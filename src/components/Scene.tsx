@@ -3,19 +3,22 @@ import { useEffect, useRef } from "react";
 import { GLTFExporter } from "three/examples/jsm/Addons.js";
 import { Pixel } from "./Pixel";
 import { PixelCanvas } from "./CanvasPixel";
+import * as THREE from 'three'
 export const Scene = ({ exportScene, setExportScene, optimize, setOptimize, pixels }: { exportScene: boolean, setExportScene:  (value: boolean) => void, optimize: boolean, setOptimize:  (value: boolean) => void, pixels: PixelCanvas[] }) => {
     const { scene } = useThree()
     const groupRef = useRef(null)
     useEffect(() => {
         if (optimize) {
 
-            const contarObjetos = (obj) => {
+            const contarObjetos = (obj: THREE.Object3D) => {
                 let count = 0
 
                 obj.traverse((child) => {
-                    console.log(child)
-                    console.log(child.position)
-                    if (child.isMesh) count++
+                    if (child instanceof THREE.Mesh) {
+                        console.log(child);
+                        console.log(child.position);
+                        count++;
+                      }
                 })
 
                 console.log(count)

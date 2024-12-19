@@ -285,7 +285,7 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
 
                 <div className="flex gap-1 justify-center">
                     <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => eraseDraw()}><Trash2 /></div>
-                    <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { loadImage('tile2') }}><ImagePlus /></div>
+                    <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { loadImage('mage') }}><ImagePlus /></div>
                     <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { fillArea() }}><PaintBucket /></div>
                 </div>
                 <canvas
@@ -305,15 +305,15 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
 
             <div className="flex flex-col gap-1">
                 {
-                    Object.values(COLORS).map((col: string) =>
+                    Object.values(COLORS).filter((c:string) => c!== COLORS.ERASE2).map((col: string, index: number) =>
                         <div
                             key={col}
                             style={{ background: col }}
                             onClick={() => setColor(col)}
-                            className={`h-7 w-7 rounded ${color === col ? 'border-2' : 'none'} border-yellow-500 `} />
+                            className={`h-7 w-7 rounded ${color === col ? 'border-2' : 'none'} ${col === COLORS.ERASE2 ? 'd-none' : 'bg-white'} `} />
                     )
                 }
-                <div className={`h-7 w-7 rounded ${color === COLORS.ERASE2 ? 'border-2' : 'none'} border-yellow-500 bg-white `}
+                <div className={`h-7 w-7 rounded ${color === COLORS.ERASE2 ? 'border-2' : 'none'} border-yellow-500 bg-gray `}
                     onClick={() => setColor(COLORS.ERASE2)}
                 >
                     <Eraser />

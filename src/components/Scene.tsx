@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { GLTFExporter } from "three/examples/jsm/Addons.js";
 import { Pixel } from "./Pixel";
 import { PixelCanvas } from "./CanvasPixel";
-export const Scene = ({ children, exportScene, setExportScene, optimize, setOptimize, pixels }: { children: any, exportScene: Boolean, setExportScene: any, optimize: any, setOptimize: any, pixels: PixelCanvas }) => {
+export const Scene = ({ children, exportScene, setExportScene, optimize, setOptimize, pixels }: { children: any, exportScene: boolean, setExportScene:  (value: boolean) => void, optimize: boolean, setOptimize:  (value: boolean) => void, pixels: PixelCanvas[] }) => {
     const { scene } = useThree()
     const groupRef = useRef(null)
     useEffect(() => {

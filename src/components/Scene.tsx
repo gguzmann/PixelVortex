@@ -1,11 +1,9 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { GLTFExporter } from "three/examples/jsm/Addons.js";
-import { Merged } from "@react-three/drei";
-import * as THREE from 'three'
 import { Pixel } from "./Pixel";
 import { PixelCanvas } from "./CanvasPixel";
-export const Scene = ({ children, exportScene, setExportScene, optimize, setOptimize, pixels }: { children: any, exportScene: Boolean, setExportScene: any, optimize: any, setOptimize: any, pixels: any }) => {
+export const Scene = ({ children, exportScene, setExportScene, optimize, setOptimize, pixels }: { children: any, exportScene: Boolean, setExportScene: any, optimize: any, setOptimize: any, pixels: PixelCanvas }) => {
     const { scene } = useThree()
     const groupRef = useRef(null)
     useEffect(() => {

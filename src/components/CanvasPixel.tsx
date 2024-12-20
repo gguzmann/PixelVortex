@@ -19,6 +19,8 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
     const [color, setColor] = useState(COLORS.BLACK)
     const [numDepth, setNumDepth] = useState(1)
     const [hoverPixel, setHoverPixel] = useState<{ x: number, y: number } | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null); // Referencia para el input oculto
+
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const canvasGrillaRef = useRef<HTMLCanvasElement | null>(null);
@@ -193,7 +195,7 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
         setPixels([])
         //  Cargar y dibujar la imagen en el canvas
         const image = new Image();
-        image.src = "/" + sprite + ".png"; // Cambia esto por la ruta de tu imagen de 16x16
+        image.src = "/" + sprite; // Cambia esto por la ruta de tu imagen de 16x16
         image.onload = () => {
             if (!ctxRef.current) return
 
@@ -258,8 +260,17 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
         const updatedPixels = pixels.map((pix: PixelCanvas) => ({ ...pix, count: 16 }));
         setPixels(updatedPixels);
         redraw()
-
     }
+
+    const onImageChange = (event:any) => {
+        if (!ctxRef.current) return
+
+        if (event.target.files && event.target.files[0]) {
+            const img = event.target.files[0].name
+            ctxRef.current.clearRect(0, 0, physicalSize, physicalSize)
+            loadImage(img)
+        }
+       }
 
     return (
         <div className="flex justify-center items-center min-h-screen">
@@ -284,8 +295,10 @@ export const CanvasPixel = ({ pixels, setPixels }: { pixels: any, setPixels: any
             <div>
 
                 <div className="flex gap-1 justify-center">
+                    <input ref={fileInputRef } className="hidden" type="file" accept="image/*" onChange={onImageChange} />
+
                     <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => eraseDraw()}><Trash2 /></div>
-                    <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { loadImage('mage') }}><ImagePlus /></div>
+                    <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { fileInputRef.current?.click() }}><ImagePlus /></div>
                     <div className="text-white bg-black rounded p-2 cursor-pointer hover:bg-opacity-55" onClick={() => { fillArea() }}><PaintBucket /></div>
                 </div>
                 <canvas

@@ -116,7 +116,7 @@ export const Scene = ({ exportScene, setExportScene, optimize, setOptimize, pixe
                     ),
                 ]}
                 >
-                {(Box) => (
+                {(Box: React.ElementType) => (
                     <>
                     {
                         pixels.filter((p: PixelCanvas) => p.color !== "rgba(0,0,0,0)").map((item: PixelCanvas, i: number) =>
